@@ -1,5 +1,4 @@
 *.seal
 seal
 vgcore*
-!raylib/*.seal
 *.png
