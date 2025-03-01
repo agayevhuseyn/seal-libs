@@ -4,14 +4,8 @@
 // libname
 static const char* libname = "raylib";
 
-// constant field names
-static const char* color_mnames[] =   {"r", "g", "b", "a"};
-static const char* vec2_mnames[] =    {"x", "y"};
-static const char* texture_mnames[] = {"id",
-                                       "width",
-                                       "height",
-                                       "mipmaps",
-                                       "format"};
+// global constant field names
+static const char* vec2_mnames[] = {"x", "y"};
 
 // singleton
 static sealobj* keys;
@@ -286,6 +280,8 @@ void _initlib()
 
 sealobj* _color(sealobj** args, size_t arg_size)
 {
+  static const char* color_mnames[] =   {"r", "g", "b", "a"};
+
   seal_type expected_types[] = { SEAL_INT, SEAL_INT, SEAL_INT, SEAL_INT };
   seal_check_args(libname, "color", expected_types, 4, args, arg_size);
   return seal_create_object(color_mnames, args, arg_size);
@@ -306,6 +302,12 @@ sealobj* _keys(sealobj** args, size_t arg_size)
 
 sealobj* _load_texture(sealobj** args, size_t arg_size)
 {
+  static const char* texture_mnames[] = {"id",
+                                         "width",
+                                         "height",
+                                         "mipmaps",
+                                         "format"};
+
   seal_type expected_types[] = { SEAL_STRING };
   seal_check_args(libname, "load_texture", expected_types, 1, args, arg_size);
 
@@ -400,7 +402,7 @@ sealobj* _get_fps(sealobj** args, size_t arg_size)
 sealobj* _delta_time(sealobj** args, size_t arg_size)
 {
   seal_check_args(libname, "delta_time", NULL, 0, args, arg_size);
-  sealobj* sobj = create_sealobj(AST_FLOAT);
+  sealobj* sobj = create_sealobj(SEAL_FLOAT);
   sobj->floating.val = GetFrameTime();
   return sobj;
 }
@@ -555,7 +557,7 @@ sealobj* _disable_cursor(sealobj** args, size_t arg_size)
 {
   seal_check_args(libname, "disable_cursor", NULL, 0, args, arg_size);
   DisableCursor();
-  return ast_null();
+  return seal_null();
 }
 
 sealobj* _is_cursor_on_screen(sealobj** args, size_t arg_size)
@@ -608,4 +610,22 @@ sealobj* _mouse_pos(sealobj** args, size_t arg_size)
   mems[1] = mem_y;
 
   return seal_create_object(vec2_mnames, mems, 2);
+}
+
+sealobj* _draw_text(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "draw_text";
+
+  seal_type expected_types[] = { SEAL_STRING, SEAL_NUMBER, SEAL_NUMBER, SEAL_NUMBER, SEAL_OBJECT};
+  seal_check_args(libname, func_name, expected_types, 5, args, arg_size);
+  DrawText(args[0]->string.val,
+           IS_SEAL_INT(args[1]) ? args[1]->integer.val : args[1]->floating.val,
+           IS_SEAL_INT(args[2]) ? args[2]->integer.val : args[2]->floating.val,
+           IS_SEAL_INT(args[3]) ? args[3]->integer.val : args[3]->floating.val,
+           (Color){ seal_get_obj_mem(args[4], "r", SEAL_INT, libname, func_name)->integer.val,
+                    seal_get_obj_mem(args[4], "g", SEAL_INT, libname, func_name)->integer.val,
+                    seal_get_obj_mem(args[4], "b", SEAL_INT, libname, func_name)->integer.val,
+                    seal_get_obj_mem(args[4], "a", SEAL_INT, libname, func_name)->integer.val }
+          );
+  return seal_null();
 }
