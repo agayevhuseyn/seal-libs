@@ -15,14 +15,14 @@ void _initlib()
 
   // keys
   keys = create_sealobj(SEAL_OBJECT);
-  keys->ref_counter = 1;
+  keys->is_static = true;
   keys->object.is_lit = true;
   size_t key_field_size = 110;
   keys->object.field_size = key_field_size;
   keys->object.field_vals = SEAL_CALLOC(key_field_size, sizeof(sealobj*));
   for (int i = 0; i < key_field_size; i++) {
     keys->object.field_vals[i] = create_sealobj(SEAL_INT);
-    keys->object.field_vals[i]->ref_counter = 1;
+    keys->object.field_vals[i]->is_static = true;
   }
   keys->object.field_names = SEAL_CALLOC(key_field_size, sizeof(char*));
 
