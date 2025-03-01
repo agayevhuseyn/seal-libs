@@ -11,7 +11,7 @@ static const char* vec2_mnames[] = {"x", "y"};
 static sealobj* keys;
 void _initlib()
 {
-  create_const_asts();
+  create_const_seal_objects();
 
   // keys
   keys = create_sealobj(SEAL_OBJECT);
