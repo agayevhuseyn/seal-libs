@@ -49,8 +49,8 @@ You can visit official raylib repository: https://github.com/raysan5/raylib
 
 ## Texture drawing functions
 - \+ void DrawTexture(Texture2D texture, int posX, int posY, Color tint); -> draw_texture
-- \- void DrawTextureV(Texture2D texture, Vector2 position, Color tint);
-- \- void DrawTextureEx(Texture2D texture, Vector2 position, float rotation, float scale, Color tint);
+- \+ void DrawTextureV(Texture2D texture, Vector2 position, Color tint); -> draw_texture_v
+- \+ void DrawTextureEx(Texture2D texture, Vector2 position, float rotation, float scale, Color tint); -> draw_texture_ex
 - \- void DrawTextureRec(Texture2D texture, Rectangle source, Vector2 position, Color tint);
 - \- void DrawTexturePro(Texture2D texture, Rectangle source, Rectangle dest, Vector2 origin, float rotation, Color tint);
 
@@ -59,7 +59,7 @@ You can visit official raylib repository: https://github.com/raysan5/raylib
 - \- Font LoadFontEx(const char *fileName, int fontSize, int *codepoints, int codepointCount);
 
 ## Text drawing functions
-- \- void DrawText(const char *text, int posX, int posY, int fontSize, Color color);       // Draw text (using default font)
+- \+ void DrawText(const char *text, int posX, int posY, int fontSize, Color color);       // Draw text (using default font) -> draw_text
 - \- void DrawTextEx(Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint); // Draw text using font and additional parameters
 - \- void DrawTextPro(Font font, const char *text, Vector2 position, Vector2 origin, float rotation, float fontSize, float spacing, Color tint); // Draw text using Font and pro parameters (rotation)
 

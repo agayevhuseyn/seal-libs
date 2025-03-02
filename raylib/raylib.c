@@ -430,9 +430,9 @@ sealobj* _draw_line_ex(sealobj** args, size_t arg_size)
   seal_type expected_types[] = { SEAL_OBJECT, SEAL_OBJECT, SEAL_NUMBER, SEAL_OBJECT};
   seal_check_args(libname, func_name, expected_types, sizeof(expected_types) / sizeof(expected_types[0]), args, arg_size);
   sealobj* start_x = seal_get_obj_mem(args[0], "x", SEAL_NUMBER, libname, func_name),
-          *start_y = seal_get_obj_mem(args[0], "y", SEAL_NUMBER, libname, func_name),
-          *end_x   = seal_get_obj_mem(args[1], "x", SEAL_NUMBER, libname, func_name),
-          *end_y   = seal_get_obj_mem(args[1], "y", SEAL_NUMBER, libname, func_name);
+         * start_y = seal_get_obj_mem(args[0], "y", SEAL_NUMBER, libname, func_name),
+         * end_x   = seal_get_obj_mem(args[1], "x", SEAL_NUMBER, libname, func_name),
+         * end_y   = seal_get_obj_mem(args[1], "y", SEAL_NUMBER, libname, func_name);
   DrawLineEx(// start pos vec2
              (Vector2) { .x = IS_SEAL_INT(start_x) ? start_x->integer.val : start_x->floating.val,
                          .y = IS_SEAL_INT(start_y) ? start_y->integer.val : start_y->floating.val },
@@ -501,6 +501,58 @@ sealobj* _draw_texture(sealobj** args, size_t arg_size)
                        seal_get_obj_mem(args[3], "b", SEAL_INT, libname, func_name)->integer.val,
                        seal_get_obj_mem(args[3], "a", SEAL_INT, libname, func_name)->integer.val }
              );
+  return seal_null();
+}
+
+sealobj* _draw_texture_v(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "draw_texture_v";
+
+  seal_type expected_types[] = { SEAL_OBJECT, SEAL_OBJECT, SEAL_OBJECT};
+  seal_check_args(libname, func_name, expected_types, 3, args, arg_size);
+  
+  sealobj* x = seal_get_obj_mem(args[1], "x", SEAL_NUMBER, libname, func_name),
+         * y = seal_get_obj_mem(args[1], "y", SEAL_NUMBER, libname, func_name);
+
+  DrawTextureV((Texture2D) { seal_get_obj_mem(args[0], "id", SEAL_INT, libname, func_name)->integer.val,
+                            seal_get_obj_mem(args[0], "width", SEAL_INT, libname, func_name)->integer.val,
+                            seal_get_obj_mem(args[0], "height", SEAL_INT, libname, func_name)->integer.val,
+                            seal_get_obj_mem(args[0], "mipmaps", SEAL_INT, libname, func_name)->integer.val,
+                            seal_get_obj_mem(args[0], "format", SEAL_INT, libname, func_name)->integer.val},
+               (Vector2) { IS_SEAL_INT(x) ? x->integer.val : x->floating.val,
+                           IS_SEAL_INT(y) ? y->integer.val : y->floating.val, },
+               (Color){ seal_get_obj_mem(args[2], "r", SEAL_INT, libname, func_name)->integer.val,
+                        seal_get_obj_mem(args[2], "g", SEAL_INT, libname, func_name)->integer.val,
+                        seal_get_obj_mem(args[2], "b", SEAL_INT, libname, func_name)->integer.val,
+                        seal_get_obj_mem(args[2], "a", SEAL_INT, libname, func_name)->integer.val }
+              );
+  return seal_null();
+}
+
+sealobj* _draw_texture_ex(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "draw_texture_ex";
+
+  seal_type expected_types[] = { SEAL_OBJECT, SEAL_OBJECT, SEAL_NUMBER, SEAL_NUMBER, SEAL_OBJECT};
+  seal_check_args(libname, func_name, expected_types, 5, args, arg_size);
+  
+  sealobj* x = seal_get_obj_mem(args[1], "x", SEAL_NUMBER, libname, func_name),
+         * y = seal_get_obj_mem(args[1], "y", SEAL_NUMBER, libname, func_name);
+
+  DrawTextureEx((Texture2D) { seal_get_obj_mem(args[0], "id", SEAL_INT, libname, func_name)->integer.val,
+                              seal_get_obj_mem(args[0], "width", SEAL_INT, libname, func_name)->integer.val,
+                              seal_get_obj_mem(args[0], "height", SEAL_INT, libname, func_name)->integer.val,
+                              seal_get_obj_mem(args[0], "mipmaps", SEAL_INT, libname, func_name)->integer.val,
+                              seal_get_obj_mem(args[0], "format", SEAL_INT, libname, func_name)->integer.val},
+                (Vector2) { IS_SEAL_INT(x) ? x->integer.val : x->floating.val,
+                            IS_SEAL_INT(y) ? y->integer.val : y->floating.val, },
+                IS_SEAL_INT(args[2]) ? args[2]->integer.val : args[2]->floating.val,
+                IS_SEAL_INT(args[3]) ? args[3]->integer.val : args[3]->floating.val,
+                (Color){ seal_get_obj_mem(args[4], "r", SEAL_INT, libname, func_name)->integer.val,
+                         seal_get_obj_mem(args[4], "g", SEAL_INT, libname, func_name)->integer.val,
+                         seal_get_obj_mem(args[4], "b", SEAL_INT, libname, func_name)->integer.val,
+                         seal_get_obj_mem(args[4], "a", SEAL_INT, libname, func_name)->integer.val }
+               );
   return seal_null();
 }
 
