@@ -65,5 +65,5 @@ You can visit official raylib repository: https://github.com/raysan5/raylib
 
 ## Text font info functions
 - \- void SetTextLineSpacing(int spacing);                                                 // Set vertical line spacing when drawing with line-breaks
-- \- int MeasureText(const char *text, int fontSize);                                      // Measure string width for default font
+- \+ int MeasureText(const char *text, int fontSize); -> measure_text // Measure string width for default font
 - \- Vector2 MeasureTextEx(Font font, const char *text, float fontSize, float spacing);    // Measure string size for Font

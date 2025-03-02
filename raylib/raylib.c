@@ -681,3 +681,18 @@ sealobj* _draw_text(sealobj** args, size_t arg_size)
           );
   return seal_null();
 }
+
+sealobj* _measure_text(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "measure_text";
+
+  seal_type expected_types[] = { SEAL_STRING, SEAL_NUMBER };
+  seal_check_args(libname, func_name, expected_types, 2, args, arg_size);
+  sealobj* text_width = create_sealobj(SEAL_INT);
+  text_width->integer.val =
+    MeasureText(
+      args[0]->string.val,
+      IS_SEAL_INT(args[1]) ? args[1]->integer.val : args[1]->floating.val
+    );
+  return text_width;
+}
