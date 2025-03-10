@@ -56,11 +56,11 @@ You can visit official raylib repository: https://github.com/raysan5/raylib
 
 ## Font loading/unloading functions
 - \- Font LoadFont(const char *fileName);
-- \- Font LoadFontEx(const char *fileName, int fontSize, int *codepoints, int codepointCount);
+- \+ Font LoadFontEx(const char *fileName, int fontSize, int *codepoints, int codepointCount); -> load_font(filename, fontsize)
 
 ## Text drawing functions
 - \+ void DrawText(const char *text, int posX, int posY, int fontSize, Color color);       // Draw text (using default font) -> draw_text
-- \- void DrawTextEx(Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint); // Draw text using font and additional parameters
+- \- void DrawTextEx(Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint); -> draw_text_ex
 - \- void DrawTextPro(Font font, const char *text, Vector2 position, Vector2 origin, float rotation, float fontSize, float spacing, Color tint); // Draw text using Font and pro parameters (rotation)
 
 ## Text font info functions

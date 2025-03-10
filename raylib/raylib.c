@@ -696,3 +696,52 @@ sealobj* _measure_text(sealobj** args, size_t arg_size)
     );
   return text_width;
 }
+
+sealobj* _load_font(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "load_font";
+
+  seal_type expected_types[] = { SEAL_STRING, SEAL_INT };
+  seal_check_args(libname, func_name, expected_types, 2, args, arg_size);
+
+  Font font = LoadFontEx(args[0]->string.val, args[1]->integer.val, NULL, 0);
+  if (font.texture.id == 0) return ast_null();
+
+  Font* fontp = SEAL_CALLOC(1, sizeof(Font));
+
+  fontp->recs = font.recs;
+  fontp->glyphs= font.glyphs;
+  fontp->texture = font.texture;
+  fontp->baseSize = font.baseSize;
+  fontp->glyphCount = font.glyphCount;
+  fontp->glyphPadding = font.glyphPadding;
+
+  sealobj* font_ptr = create_sealobj(SEAL_INT);
+  font_ptr->integer.val = (Seal_int) fontp;
+  return font_ptr;
+}
+
+sealobj* _draw_text_ex(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "draw_text_ex";
+
+  seal_type expected_types[] = { SEAL_INT, SEAL_STRING, SEAL_OBJECT, SEAL_NUMBER, SEAL_NUMBER, SEAL_OBJECT};
+  seal_check_args(libname, func_name, expected_types, 6, args, arg_size);
+  //DrawTextEx(Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint);
+  //
+  sealobj* x = seal_get_obj_mem(args[2], "x", SEAL_NUMBER, libname, func_name),
+         * y = seal_get_obj_mem(args[2], "y", SEAL_NUMBER, libname, func_name);
+
+  DrawTextEx(*((Font*) args[0]->integer.val),
+             args[1]->string.val,
+             (Vector2) { IS_SEAL_INT(x) ? x->integer.val : x->floating.val,
+                         IS_SEAL_INT(y) ? y->integer.val : y->floating.val },
+             IS_SEAL_INT(args[3]) ? args[3]->integer.val : args[3]->floating.val,
+             IS_SEAL_INT(args[4]) ? args[4]->integer.val : args[4]->floating.val,
+             (Color){ seal_get_obj_mem(args[5], "r", SEAL_INT, libname, func_name)->integer.val,
+                      seal_get_obj_mem(args[5], "g", SEAL_INT, libname, func_name)->integer.val,
+                      seal_get_obj_mem(args[5], "b", SEAL_INT, libname, func_name)->integer.val,
+                      seal_get_obj_mem(args[5], "a", SEAL_INT, libname, func_name)->integer.val }
+            );
+  return seal_null();
+}
