@@ -426,7 +426,7 @@ sealobj* _draw_line(sealobj** args, size_t arg_size)
 
 sealobj* _draw_line_ex(sealobj** args, size_t arg_size)
 {
-  static const char* func_name = "draw_line";
+  static const char* func_name = "draw_line_ex";
   seal_type expected_types[] = { SEAL_OBJECT, SEAL_OBJECT, SEAL_NUMBER, SEAL_OBJECT};
   seal_check_args(libname, func_name, expected_types, sizeof(expected_types) / sizeof(expected_types[0]), args, arg_size);
   sealobj* start_x = seal_get_obj_mem(args[0], "x", SEAL_NUMBER, libname, func_name),

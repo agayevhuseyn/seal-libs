@@ -50,6 +50,9 @@
 
 #define ast_type(ast) ast->type
 
+#define SEAL_INCLUDE_LIB 0
+#define SEAL_INCLUDE_SRC 1
+
 typedef struct ast {
   int type;
   int line;
@@ -60,10 +63,10 @@ typedef struct ast {
   union {
     /* datas */
     struct {
-      int val;
+      Seal_int val;
     } integer;
     struct {
-      float val;
+      Seal_float val;
     } floating;
     struct {
       char* val;
@@ -121,6 +124,7 @@ typedef struct ast {
       struct ast** exprs;
       size_t size;
       bool is_const;
+      bool is_extern;
     } var_def;
     struct {
       struct ast* cond;
@@ -153,6 +157,7 @@ typedef struct ast {
       const char** param_names;
       size_t param_size;
       struct ast* comp;
+      bool is_extern;
     } func_def;
     struct {
       const char* name;
@@ -197,6 +202,7 @@ typedef struct ast {
     /* others */
     struct {
       const char* name;
+      int type; /* lib or src */
       const char* alias;
       bool has_alias;
     } include;

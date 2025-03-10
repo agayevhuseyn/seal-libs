@@ -14,7 +14,10 @@
 
 #define ERR_LEN 256
 
-#define MAX_RET_TIME 2
+#define MAX_RET_TIME 3
+
+typedef long long Seal_int;
+typedef double    Seal_float;
 
 #define RESERVED_NAMES ( \
     (char*[]) { "writeln",\
