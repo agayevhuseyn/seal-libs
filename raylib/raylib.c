@@ -705,7 +705,7 @@ sealobj* _load_font(sealobj** args, size_t arg_size)
   seal_check_args(libname, func_name, expected_types, 2, args, arg_size);
 
   Font font = LoadFontEx(args[0]->string.val, args[1]->integer.val, NULL, 0);
-  if (font.texture.id == 0) return ast_null();
+  if (font.baseSize == 0) return ast_null();
 
   Font* fontp = SEAL_CALLOC(1, sizeof(Font));
 
@@ -744,4 +744,14 @@ sealobj* _draw_text_ex(sealobj** args, size_t arg_size)
                       seal_get_obj_mem(args[5], "a", SEAL_INT, libname, func_name)->integer.val }
             );
   return seal_null();
+}
+
+sealobj* _get_key_pressed(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "get_key_pressed";
+
+  seal_check_args(libname, func_name, NULL, 0, args, arg_size);
+  sealobj* key = create_sealobj(SEAL_INT);
+  key->integer.val = GetKeyPressed();
+  return key; 
 }
