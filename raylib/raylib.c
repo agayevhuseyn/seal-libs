@@ -570,6 +570,27 @@ sealobj* _is_key_pressed(sealobj** args, size_t arg_size)
   return IsKeyPressed(args[0]->integer.val) ? seal_true() : seal_false();
 }
 
+sealobj* _is_key_pressed_repeat(sealobj** args, size_t arg_size)
+{
+  seal_type expected_types[] = { SEAL_INT };
+  seal_check_args(libname, "is_key_pressed_repeat", expected_types, 1, args, arg_size);
+  return IsKeyPressedRepeat(args[0]->integer.val) ? seal_true() : seal_false();
+}
+
+sealobj* _is_key_released(sealobj** args, size_t arg_size)
+{
+  seal_type expected_types[] = { SEAL_INT };
+  seal_check_args(libname, "is_key_released", expected_types, 1, args, arg_size);
+  return IsKeyReleased(args[0]->integer.val) ? seal_true() : seal_false();
+}
+
+sealobj* _is_key_up(sealobj** args, size_t arg_size)
+{
+  seal_type expected_types[] = { SEAL_INT };
+  seal_check_args(libname, "is_key_up", expected_types, 1, args, arg_size);
+  return IsKeyUp(args[0]->integer.val) ? seal_true() : seal_false();
+}
+
 sealobj* _set_exit_key(sealobj** args, size_t arg_size)
 {
   seal_type expected_types[] = { SEAL_INT };
@@ -753,5 +774,47 @@ sealobj* _get_key_pressed(sealobj** args, size_t arg_size)
   seal_check_args(libname, func_name, NULL, 0, args, arg_size);
   sealobj* key = create_sealobj(SEAL_INT);
   key->integer.val = GetKeyPressed();
-  return key; 
+  return key;
+}
+
+sealobj* _get_char_pressed(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "get_char_pressed";
+
+  seal_check_args(libname, func_name, NULL, 0, args, arg_size);
+  sealobj* key = create_sealobj(SEAL_INT);
+  key->integer.val = GetCharPressed();
+  return key;
+}
+
+sealobj* _set_config_flags(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "set_config_flags";
+
+  seal_type expected_types[] = { SEAL_INT };
+  seal_check_args(libname, func_name, expected_types, 1, args, arg_size);
+
+  SetConfigFlags(args[0]->integer.val);
+
+  return ast_null();
+}
+
+sealobj* _get_screen_width(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "get_screen_width";
+
+  seal_check_args(libname, func_name, NULL, 0, args, arg_size);
+  sealobj* width = create_sealobj(SEAL_INT);
+  width->integer.val = GetScreenWidth();
+  return width;
+}
+
+sealobj* _get_screen_height(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "get_screen_height";
+
+  seal_check_args(libname, func_name, NULL, 0, args, arg_size);
+  sealobj* height = create_sealobj(SEAL_INT);
+  height->integer.val = GetScreenHeight();
+  return height;
 }

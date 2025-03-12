@@ -6,6 +6,9 @@ You can visit official raylib repository: https://github.com/raysan5/raylib
 - \+ void InitWindow(int width, int height, const char *title); -> init_window
 - \+ void CloseWindow(void); -> close_window
 - \+ bool WindowShouldClose(void); -> window_should_close
+- \+ void SetConfigFlags(unsigned int flags); -> set_config_flags
+- \+ int GetScreenWidth(void);
+- \+ int GetScreenHeight(void);
 
 ## cursor related
 - \+ void ShowCursor(void); -> show_cursor
@@ -29,7 +32,12 @@ You can visit official raylib repository: https://github.com/raysan5/raylib
 - \+ object keys() -> example: raylib::keys().KEY_A
 - \+ bool IsKeyPressed(int key); -> is_key_pressed
 - \+ bool IsKeyDown(int key); -> is_key_down
+- \+ bool IsKeyPressedRepeat(int key); -> is_key_pressed_repeat
+- \+ bool IsKeyReleased(int key); -> is_key_released
+- \+ bool IsKeyUp(int key); -> is_key_up
 - \+ void SetExitKey(int key); -> set_exit_key
+- \+ int GetKeyPressed(void); -> get_key_pressed
+- \+ int GetCharPressed(void); -> get_char_pressed
 
 ## mouse input related
 - \+ bool IsMouseButtonPressed(int button); -> is_mouse_pressed
