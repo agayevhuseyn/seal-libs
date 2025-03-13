@@ -653,6 +653,20 @@ sealobj* _is_mouse_pressed(sealobj** args, size_t arg_size)
   return IsMouseButtonPressed(args[0]->integer.val) ? seal_true() : seal_false();
 }
 
+sealobj* _is_mouse_released(sealobj** args, size_t arg_size)
+{
+  seal_type expected_types[] = { SEAL_INT };
+  seal_check_args(libname, "is_mouse_released", expected_types, 1, args, arg_size);
+  return IsMouseButtonReleased(args[0]->integer.val) ? seal_true() : seal_false();
+}
+
+sealobj* _is_mouse_up(sealobj** args, size_t arg_size)
+{
+  seal_type expected_types[] = { SEAL_INT };
+  seal_check_args(libname, "is_mouse_up", expected_types, 1, args, arg_size);
+  return IsMouseButtonUp(args[0]->integer.val) ? seal_true() : seal_false();
+}
+
 sealobj* _mouse_x(sealobj** args, size_t arg_size)
 {
   seal_check_args(libname, "mouse_x", NULL, 0, args, arg_size);
