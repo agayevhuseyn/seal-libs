@@ -832,3 +832,100 @@ sealobj* _get_screen_height(sealobj** args, size_t arg_size)
   height->integer.val = GetScreenHeight();
   return height;
 }
+
+sealobj* _init_audio_device(sealobj** args, size_t arg_size)
+{
+  seal_check_args(libname, "init_audio_device", NULL, 0, args, arg_size);
+  InitAudioDevice();
+  return seal_null();
+}
+
+sealobj* _close_audio_device(sealobj** args, size_t arg_size)
+{
+  seal_check_args(libname, "close_audio_device", NULL, 0, args, arg_size);
+  CloseAudioDevice();
+  return seal_null();
+}
+
+sealobj* _is_audio_device_ready(sealobj** args, size_t arg_size)
+{
+  seal_check_args(libname, "is_audio_device_ready", NULL, 0, args, arg_size);
+  return IsAudioDeviceReady() ? seal_true() : seal_false();
+}
+
+sealobj* _load_sound(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "load_sound";
+
+  seal_type expected_types[] = { SEAL_STRING };
+  seal_check_args(libname, func_name, expected_types, 1, args, arg_size);
+
+  Sound sound = LoadSound(args[0]->string.val);
+  if (sound.frameCount == 0) return ast_null();
+
+  Sound* soundp = SEAL_CALLOC(1, sizeof(Sound));
+
+  *soundp = sound;
+
+  sealobj* sound_ptr = create_sealobj(SEAL_INT);
+  sound_ptr->integer.val = (Seal_int) soundp;
+  return sound_ptr;
+}
+
+sealobj* _play_sound(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "play_sound";
+
+  seal_type expected_types[] = { SEAL_INT };
+  seal_check_args(libname, func_name, expected_types, 1, args, arg_size);
+
+  PlaySound(*(Sound*) args[0]->integer.val);
+
+  return seal_null();
+}
+
+sealobj* _stop_sound(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "stop_sound";
+
+  seal_type expected_types[] = { SEAL_INT };
+  seal_check_args(libname, func_name, expected_types, 1, args, arg_size);
+
+  StopSound(*(Sound*) args[0]->integer.val);
+
+  return seal_null();
+}
+
+sealobj* _pause_sound(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "pause_sound";
+
+  seal_type expected_types[] = { SEAL_INT };
+  seal_check_args(libname, func_name, expected_types, 1, args, arg_size);
+
+  PauseSound(*(Sound*) args[0]->integer.val);
+
+  return seal_null();
+}
+
+sealobj* _resume_sound(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "resume_sound";
+
+  seal_type expected_types[] = { SEAL_INT };
+  seal_check_args(libname, func_name, expected_types, 1, args, arg_size);
+
+  ResumeSound(*(Sound*) args[0]->integer.val);
+
+  return seal_null();
+}
+
+sealobj* _is_sound_playing(sealobj** args, size_t arg_size)
+{
+  static const char* func_name = "is_sound_playing";
+
+  seal_type expected_types[] = { SEAL_INT };
+  seal_check_args(libname, func_name, expected_types, 1, args, arg_size);
+
+  return IsSoundPlaying(*(Sound*) args[0]->integer.val) ? seal_true() : seal_false();
+}
