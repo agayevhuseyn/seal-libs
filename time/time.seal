@@ -1,0 +1,7 @@
+include time
+
+extern define time()
+  return time:time()
+
+extern define date(sec)
+  return time:date(sec)
