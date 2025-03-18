@@ -1,0 +1,19 @@
+include math
+
+extern define sin(x)
+  return math:sin(x)
+
+extern define cos(x)
+  return math:cos(x)
+
+extern define tan(x)
+  return math:tan(x)
+
+extern define sqrt(x)
+  return math:sqrt(x)
+
+extern define cbrt(x)
+  return math:cbrt(x)
+
+extern define atan2(y, x)
+  return math:atan2(y, x)
