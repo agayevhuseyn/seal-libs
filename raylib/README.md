@@ -62,7 +62,7 @@ You can visit official raylib repository: https://github.com/raysan5/raylib
 - \+ void DrawTextureV(Texture2D texture, Vector2 position, Color tint); -> draw_texture_v
 - \+ void DrawTextureEx(Texture2D texture, Vector2 position, float rotation, float scale, Color tint); -> draw_texture_ex
 - \- void DrawTextureRec(Texture2D texture, Rectangle source, Vector2 position, Color tint);
-- \- void DrawTexturePro(Texture2D texture, Rectangle source, Rectangle dest, Vector2 origin, float rotation, Color tint);
+- \+ void DrawTexturePro(Texture2D texture, Rectangle source, Rectangle dest, Vector2 origin, float rotation, Color tint); -> draw_texture_pro
 
 ## Font loading/unloading functions
 - \+ Font LoadFont(const char *fileName);
