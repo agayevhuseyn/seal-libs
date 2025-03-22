@@ -5,7 +5,14 @@
 static const char* libname = "random";
 
 void _initlib() {
-  srand(time(0));
+  create_const_seal_objects();
+}
+
+sealobj* _srand(sealobj** args, size_t arg_size)
+{
+  seal_check_args(libname, "srand", (seal_type[]){SEAL_INT}, 1, args, arg_size);
+  srand(args[0]->integer.val);
+  return seal_null();
 }
 
 sealobj* _rand(sealobj** args, size_t arg_size)
