@@ -469,7 +469,7 @@ sealobj* _load_font(sealobj** args, size_t arg_size)
   seal_check_args(libname, func_name, expected_types, 2, args, arg_size);
 
   Font font = LoadFontEx(args[0]->string.val, args[1]->integer.val, NULL, 0);
-  if (font.baseSize == 0) return ast_null();
+  if (font.baseSize == 0) return seal_null();
 
   Font* fontp = SEAL_CALLOC(1, sizeof(Font));
 
@@ -539,7 +539,7 @@ sealobj* _set_config_flags(sealobj** args, size_t arg_size)
 
   SetConfigFlags(args[0]->integer.val);
 
-  return ast_null();
+  return seal_null();
 }
 
 sealobj* _get_screen_width(sealobj** args, size_t arg_size)
@@ -590,7 +590,7 @@ sealobj* _load_sound(sealobj** args, size_t arg_size)
   seal_check_args(libname, func_name, expected_types, 1, args, arg_size);
 
   Sound sound = LoadSound(args[0]->string.val);
-  if (sound.frameCount == 0) return ast_null();
+  if (sound.frameCount == 0) return seal_null();
 
   Sound* soundp = SEAL_CALLOC(1, sizeof(Sound));
 
